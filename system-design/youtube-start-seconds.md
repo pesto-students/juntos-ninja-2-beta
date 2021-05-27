@@ -1,4 +1,4 @@
-# YouTube Iframe API - startSecond
+# YouTube Iframe API - ``startSeconds``
 
 The property **startSeconds** lets you skip the given seconds from the start of video.
 
