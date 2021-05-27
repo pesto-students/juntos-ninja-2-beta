@@ -7,16 +7,50 @@ The property **startSeconds** lets you skip the given seconds from the start of 
 - **startSeconds** load video and skip the given seconds from the start.
 - **startSeconds** only available when the player is loaded.
 - **startSeconds** can be called at the initial load of the video.
-- Similar to **startSeconds** we have **endSeconds** for deciding when to stop the video.
 
 ## How it can help with Sync
 
 We can use this configuration for people that join the group late after video has already started to make them sync to other Users.
-So when User join the host Party we will assign host youtube player current timestamp by method ytplayer.getCurrentTime(); to the start seconds i.e startSeconds = hostPlayer.getCurrentTime().
+So when User join the host Party we will assign host youtube player current timestamp by method player.getCurrentTime(); to the start seconds i.e startSeconds = hostPlayer.player.getCurrentTime():Number.
 
-##### Note: getCurrentTime is not a function needs to be created manually [This is how you can do that](https://stackoverflow.com/questions/58870093/get-current-timestamp-of-embedded-youtube-playlist-videos-from-the-iframe-tag).
+The above logic can be acheived via sockets where host client will broadcast getCurrentTime() that will be shared to all other clients except host client to maintain video sync.
+
+```js
+io.on("connection", (socket) => {
+  // everyone gets it but the sender
+  socket.broadcast.emit("video_current_times", {
+    time: player.getCurrentTime(),
+  });
+});
+```
+
+now this broadcast will be captured by newly user that joins by the following code.
+
+```js
+socket.on("video_current_times", function (data) {
+  // save this data
+  if(!this.state.videoLoaded) {
+    this.setState(currentTime: data.time);
+  }
+});
+```
+
+After youtube video is loaded to dom we will execute player method loadVideoById to use startSeconds
+```js
+function onPlayerReady(event) {
+  console.log("player loaded to dom");
+  player.loadVideoById({
+    videoId: "bHQqvYy5KYo",
+    startSeconds: this.state.currentTime,
+  });
+  // set videoloaded to avoid setting currentTime
+  this.setState({ videoLoaded: true });
+}
+```
+this would sync our new User that joins the room with the host currentTimestamp of video
 
 ## Reference/Examples:
+
 Below flow chart explain how will sync work for user joining our app late.
 
 ![alternative text](images/start-second-sync-flow.png)
@@ -50,8 +84,7 @@ Here an example of how the video is loaded by startSeconds via loadVideoById met
     console.log("player loaded to dom");
     player.loadVideoById({
       videoId: "bHQqvYy5KYo",
-      startSeconds: 30,
-      endSeconds: 35,
+      startSeconds: 30
     });
   }
 </script>
