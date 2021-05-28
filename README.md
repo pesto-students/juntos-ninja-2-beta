@@ -4,6 +4,3 @@ Juntos is a web application that lets you co watch streaming service such as you
 # Artefacts  
 * [PRD](/prd/Juntos_PRD.pdf) 
 * [System Design](/system-design/Juntos_system_design.pdf)
-
-
-
