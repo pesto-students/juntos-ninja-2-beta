@@ -1,0 +1,9 @@
+{
+  "name": "Authentication",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^8.6.3"
+  }
+}
