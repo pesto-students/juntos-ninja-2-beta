@@ -6,5 +6,4 @@ Juntos is a web application that lets you co watch streaming service such as you
 * [System Design](/system-design/Juntos_system_design.pdf)
 
 ### UI Design
-[Figma Link](https://www.figma.com/file/xSAo5U2oFlfKhlZ2dsxnkZ/WireFrame---Juntos?node-id=0%3A1)
-* [Landing Page](/artefacts/landing-page-design/landing-page-design.pdf)
+* Landing page [PDF](/artefacts/landing-page-design/landing-page-design.pdf) [Figma](https://www.figma.com/file/xSAo5U2oFlfKhlZ2dsxnkZ/WireFrame---Juntos?node-id=0%3A1)
